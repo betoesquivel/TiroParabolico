@@ -6,6 +6,8 @@
 
 package tiroparabolico;
 
+import javax.swing.JFrame;
+
 /**
  * Indicaciones: 
  * -> lo de guardar lo hace Beto.
@@ -31,8 +33,9 @@ public class TiroParabolico {
     public static void main(String[] args) {
         //José Alberto Esquivel A01139626   
         //Hugo León Garza A01139720
-        JFrameTiroParabolico juegoTiro = new JFrameTiroParabolico();
+        JFrameJuego1 juegoTiro = new JFrameJuego1();
         juegoTiro.setVisible(true);
+        juegoTiro.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     
 }
