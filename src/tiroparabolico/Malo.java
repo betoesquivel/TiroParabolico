@@ -32,13 +32,13 @@ public class Malo extends Base {
     private final int defaultCollisionCycles = 10;
 
     //URLs de cuadros de las animaciones
-    private URL[] umbrellaURLs = {
-        this.getClass().getResource("images/umbrella01_01.png"),
-        this.getClass().getResource("images/umbrella02_02.png"),
-        this.getClass().getResource("images/umbrella03_03.png"),
-        this.getClass().getResource("images/umbrella04_04.png"),
-        this.getClass().getResource("images/umbrella05_05.png"),
-        this.getClass().getResource("images/umbrella06_06.png")
+    private URL[] burgerURLs = {
+        this.getClass().getResource("images/frame_000.gif"),
+        this.getClass().getResource("images/frame_001.gif"),
+        this.getClass().getResource("images/frame_002.gif"),
+        this.getClass().getResource("images/frame_003.gif"),
+        this.getClass().getResource("images/frame_004.gif"),
+        this.getClass().getResource("images/frame_005.gif")
     };
     private URL[] umbrellaCollisionURLs = {
         this.getClass().getResource("images/umbrellaCollision01_01.png"),
@@ -62,7 +62,7 @@ public class Malo extends Base {
         /*
          Agrega todos los cuadros a la animacion main con 100ms de duracion
          */
-        for (URL umbrella : umbrellaURLs) {
+        for (URL umbrella : burgerURLs) {
             main.sumaCuadro(Toolkit.getDefaultToolkit().getImage(umbrella), 100);
         }
         /*
@@ -295,14 +295,14 @@ public class Malo extends Base {
      * Metodo getUmbrellaURLS regresa URLs de imágenes animación básica de
      * umbrella.
      *
-     * @return umbrellaURLs <code>URL[]</code>
+     * @return burgerURLs <code>URL[]</code>
      */
     public URL[] getUmbrellaURLs() {
-        return umbrellaURLs;
+        return burgerURLs;
     }
 
     public void setUmbrellaURLs(URL[] umbrellaURLs) {
-        this.umbrellaURLs = umbrellaURLs;
+        this.burgerURLs = umbrellaURLs;
     }
 
     /**

@@ -32,23 +32,20 @@ public class Bueno extends Base {
     //Cuadros
     private URL[] stoppedURLs = {
         this.getClass().getResource("images/ninjaStopped01_01.png"),
-        this.getClass().getResource("images/ninjaStopped02_02.png")
     };
     private URL[] derechaURLs = {
-        this.getClass().getResource("images/ninjaDerecha01_01.png"),
-        this.getClass().getResource("images/ninjaDerecha02_02.png"),
-        this.getClass().getResource("images/ninjaDerecha03_03.png"),
-        this.getClass().getResource("images/ninjaDerecha04_04.png"),
-        this.getClass().getResource("images/ninjaDerecha05_05.png"),
-        this.getClass().getResource("images/ninjaDerecha06_06.png")
+        this.getClass().getResource("images/gordoDerecha01_01.png"),
+        this.getClass().getResource("images/gordoDerecha02_02.png"),
+        this.getClass().getResource("images/gordoDerecha03_03.png"),
+        this.getClass().getResource("images/gordoDerecha04_04.png"),
+        this.getClass().getResource("images/gordoDerecha05_05.png"),
     };
     private URL[] izquierdaURLs = {
-        this.getClass().getResource("images/ninjaIzquierda01_01.png"),
-        this.getClass().getResource("images/ninjaIzquierda02_02.png"),
-        this.getClass().getResource("images/ninjaIzquierda03_03.png"),
-        this.getClass().getResource("images/ninjaIzquierda04_04.png"),
-        this.getClass().getResource("images/ninjaIzquierda05_05.png"),
-        this.getClass().getResource("images/ninjaIzquierda06_06.png")
+        this.getClass().getResource("images/gordoIzquierda01_01.png"),
+        this.getClass().getResource("images/gordoIzquierda02_02.png"),
+        this.getClass().getResource("images/gordoIzquierda03_03.png"),
+        this.getClass().getResource("images/gordoIzquierda04_04.png"),
+        this.getClass().getResource("images/gordoIzquierda05_05.png"),
     };
 
     /**

@@ -246,6 +246,7 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
         dbg.setColor(getBackground());
         dbg.fillRect(0, 0, this.getSize().width, this.getSize().height);
         dbg.drawImage(background, 0, 0, rootPane);
+        
         // Actualiza el Foreground.
         dbg.setColor(getForeground());
         paint1(dbg);
