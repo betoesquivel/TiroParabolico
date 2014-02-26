@@ -14,6 +14,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Color;
 import java.awt.HeadlessException;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -84,6 +85,7 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
         sonido = new SoundClip(saURL);
         bomb = new SoundClip(baURL);
 
+        background = Toolkit.getDefaultToolkit().getImage(backgroundURL);
         //Pinta el fondo del Applet con una imagen		
         setBackground(Color.white);
         addKeyListener(this);
@@ -243,7 +245,7 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
         // Actualiza la imagen de fondo.
         dbg.setColor(getBackground());
         dbg.fillRect(0, 0, this.getSize().width, this.getSize().height);
-
+        dbg.drawImage(background, 0, 0, rootPane);
         // Actualiza el Foreground.
         dbg.setColor(getForeground());
         paint1(dbg);
