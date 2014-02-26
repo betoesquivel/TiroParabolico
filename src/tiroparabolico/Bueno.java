@@ -28,25 +28,22 @@ public class Bueno extends Base {
     private int direction;
 
     private boolean colision; //true si esta en colision
-    
+
     //Cuadros
     private URL[] stoppedURLs = {
-        this.getClass().getResource("images/ninjaStopped01_01.png"),
-    };
+        this.getClass().getResource("images/ninjaStopped01_01.png"),};
     private URL[] derechaURLs = {
         this.getClass().getResource("images/gordoDerecha01_01.png"),
         this.getClass().getResource("images/gordoDerecha02_02.png"),
         this.getClass().getResource("images/gordoDerecha03_03.png"),
         this.getClass().getResource("images/gordoDerecha04_04.png"),
-        this.getClass().getResource("images/gordoDerecha05_05.png"),
-    };
+        this.getClass().getResource("images/gordoDerecha05_05.png"),};
     private URL[] izquierdaURLs = {
         this.getClass().getResource("images/gordoIzquierda01_01.png"),
         this.getClass().getResource("images/gordoIzquierda02_02.png"),
         this.getClass().getResource("images/gordoIzquierda03_03.png"),
         this.getClass().getResource("images/gordoIzquierda04_04.png"),
-        this.getClass().getResource("images/gordoIzquierda05_05.png"),
-    };
+        this.getClass().getResource("images/gordoIzquierda05_05.png"),};
 
     /**
      * Default Constructor that loads images in the arrays mentioned above...
@@ -97,7 +94,7 @@ public class Bueno extends Base {
     public String getPAUSADO() {
         return PAUSADO;
     }
-    
+
     public String getDESAPARECE() {
         return DESAPARECE;
     }
@@ -178,27 +175,41 @@ public class Bueno extends Base {
     /* GETTERS y SETTERS */
 
     /* COMPORTAMIENTOS */
+    /**
+     * Metodo canMove 
+     * checa si el objeto se puede mover en la direccion
+     * recibida de parametro.
+     * @param direction que se está checando
+     */
+    public void canMove(int direction){
+        
+    }
+    
     public void moveRight() {
         setHaciaLaIzquierda(false);
         setHaciaLaDerecha(true);
         setCorriendoAnimacionBasica(false);
+        setDirection(RIGHT);
     }
 
     public void moveLeft() {
         setHaciaLaIzquierda(true);
         setHaciaLaDerecha(false);
         setCorriendoAnimacionBasica(false);
+        setDirection(LEFT);
     }
 
     public void stop() {
         setHaciaLaIzquierda(false);
         setHaciaLaDerecha(false);
         setCorriendoAnimacionBasica(true);
+        setDirection(STOPPED);
     }
 
-    public void collide(){
-        colision = true; 
+    public void collide() {
+        colision = true;
     }
+
     public void move() {
         switch (direction) {
             case UP:
@@ -209,11 +220,9 @@ public class Bueno extends Base {
                 break;
             case RIGHT:
                 setPosX(getPosX() + speed);
-                moveRight();
                 break;
             case LEFT:
                 setPosX(getPosX() - speed);
-                moveLeft();
                 break;
             default:
                 stop();
