@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package testing;
+package tiroparabolico;
 
 import java.awt.Toolkit;
 import java.net.URL;

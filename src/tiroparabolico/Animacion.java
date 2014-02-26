@@ -1,4 +1,4 @@
-package testing; 
+package tiroparabolico; 
 import java.awt.Image;
 import java.util.ArrayList;
 
