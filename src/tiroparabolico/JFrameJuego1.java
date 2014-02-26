@@ -32,11 +32,10 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
     private Graphics dbg;	// Objeto grafico
     private Image background;
     private URL backgroundURL = this.getClass().getResource("images/PlataformaYPaisaje.png");
-    
 
     //Personajes en el juego
-    private Bueno ninja;    //objeto bueno, controlable con el teclado
-    private LinkedList<Malo> malos; //lista de malos
+    private Bueno gordo;    //objeto bueno, controlable con el teclado
+    private Malo burger;
 
     //marcador y pausa
     private int score;
@@ -59,21 +58,16 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
         start();
     }
 
-    
-    
-    
     /**
      * El método init() crea la animación que se mostrará en pantalla.
      */
     public void init() {
-        ninja = new Bueno();
-        
-        this.setSize(500,350);
-        //genera lista de malos de tamanio aleatorio
-        //puede ser 6, 10 o 12
-        malos = generateRandomMaloList(6, 10, 12);
-        ninja.setPosX(getWidth() / 2 - ninja.getAncho() / 2);
-        ninja.setPosY(getHeight() / 2 - ninja.getAlto() / 2);
+        gordo = new Bueno();
+        burger = crearMalo(1);
+        this.setSize(500, 350);
+
+        gordo.setPosX(getWidth() / 2 - gordo.getAncho() / 2);
+        gordo.setPosY(getHeight() / 2 - gordo.getAlto() / 2);
 
         //inicializo el marcador en 0
         score = 0;
@@ -161,19 +155,17 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
         //Guarda el tiempo actual
         tiempoActual += tiempoTranscurrido;
         if (cuadranteOprimido != -1) {
-            ninja.setDirection(cuadranteOprimido);
+            gordo.setDirection(cuadranteOprimido);
             cuadranteOprimido = -1;
         }
-        ninja.move();
-        ninja.updateAnimation(tiempoTranscurrido);
+        gordo.move();
+        gordo.updateAnimation(tiempoTranscurrido);
 
-        for (Malo paraguas : malos) {
-            if (!paraguas.isInCollision()) {
-                paraguas.move();
-            }
-            paraguas.updateAnimation(tiempoTranscurrido);
-
+        if (!burger.isInCollision()) {
+            burger.move();
         }
+        burger.updateAnimation(tiempoTranscurrido);
+
         try {
             Thread.sleep(20);
         } catch (InterruptedException ex) {
@@ -186,44 +178,41 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
      * con las orillas del <code>Applet</code>.
      */
     public void checaColision() {
-        for (Malo paraguas : malos) {
-            if (paraguas.isInCollision()) {
-                paraguas.decreaseCollisionCounter();
-                if (paraguas.getCollisionCycles() < 0) {
-                    paraguas.randomResetSide(getHeight(), getWidth());
-                }
-            } else {
-                if (paraguas.intersecta(ninja)) {
-                    paraguas.collideSides();
-                    paraguas.setCont(paraguas.getCont() + 1);
-                    sonido.play();
-                }
+        if (burger.isInCollision()) {
+            burger.decreaseCollisionCounter();
+            if (burger.getCollisionCycles() < 0) {
+                burger.randomResetSide(getHeight(), getWidth());
             }
-
-            //Checa colision con el applet
-            if (paraguas.getLado() == 1 && paraguas.getPosX() > (getWidth() - paraguas.getAncho())) {
-                paraguas.randomResetSide(getHeight(), getWidth());
-
-            } else if (paraguas.getLado() == 2 && paraguas.getPosX() < 0) {
-                paraguas.randomResetSide(getHeight(), getWidth());
+        } else {
+            if (burger.intersecta(gordo)) {
+                burger.collideSides();
+                burger.setCont(burger.getCont() + 1);
+                sonido.play();
             }
+        }
 
+        //Checa colision con el applet
+        if (burger.getLado() == 1 && burger.getPosX() > (getWidth() - burger.getAncho())) {
+            burger.randomResetSide(getHeight(), getWidth());
+
+        } else if (burger.getLado() == 2 && burger.getPosX() < 0) {
+            burger.randomResetSide(getHeight(), getWidth());
         }
 
         //checks ninja collision with applet X
-        if (ninja.getPosX() <= 0) {
-            ninja.moveRight();
-            ninja.setDirection(ninja.getRIGHT());
-        } else if (ninja.getPosX() >= getWidth() - ninja.getAncho()) {
-            ninja.moveLeft();
-            ninja.setDirection(ninja.getLEFT());
+        if (gordo.getPosX() <= 0) {
+            gordo.moveRight();
+            gordo.setDirection(gordo.getRIGHT());
+        } else if (gordo.getPosX() >= getWidth() - gordo.getAncho()) {
+            gordo.moveLeft();
+            gordo.setDirection(gordo.getLEFT());
         }
         //checks ninja collision with applet Y
-        if (ninja.getPosY() <= 0) {
-            ninja.setDirection(ninja.getDOWN());
+        if (gordo.getPosY() <= 0) {
+            gordo.setDirection(gordo.getDOWN());
 
-        } else if (ninja.getPosY() >= getHeight() - ninja.getAlto()) {
-            ninja.setDirection(ninja.getUP());
+        } else if (gordo.getPosY() >= getHeight() - gordo.getAlto()) {
+            gordo.setDirection(gordo.getUP());
         }
 
     }
@@ -246,14 +235,14 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
         dbg.setColor(getBackground());
         dbg.fillRect(0, 0, this.getSize().width, this.getSize().height);
         dbg.drawImage(background, 0, 0, rootPane);
-        
+
         // Actualiza el Foreground.
         dbg.setColor(getForeground());
         paint1(dbg);
 
         // Dibuja la imagen actualizada
         g.drawImage(dbImage, 0, 0, this);
-        
+
         paint1(g);
     }
 
@@ -262,19 +251,19 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
      */
     public void paint1(Graphics g) {
         // Muestra en pantalla el cuadro actual de la animación
-        if (ninja != null && malos != null) {
-            
+        if (gordo != null && burger != null) {
+
             if (pausado) {
-                g.drawString(ninja.getPAUSADO(), ninja.getPosX() - ninja.getAncho() / 2, ninja.getPosY() + ninja.getAlto() / 2);
+                g.drawString(gordo.getPAUSADO(), gordo.getPosX() - gordo.getAncho() / 2, gordo.getPosY() + gordo.getAlto() / 2);
             }
-            g.drawImage(ninja.getImagen(), ninja.getPosX(), ninja.getPosY(), this);
-            for (Malo paraguas : malos) {
-                if(paraguas.isInCollision()){
-                    g.drawString(ninja.getDESAPARECE(), paraguas.getPosX() - paraguas.getAncho() / 2, paraguas.getPosY() + paraguas.getAlto() / 2);
-                }
-                g.drawImage(paraguas.getImagen(), paraguas.getPosX(), paraguas.getPosY(), this);
+            g.drawImage(gordo.getImagen(), gordo.getPosX(), gordo.getPosY(), this);
+
+            if (burger.isInCollision()) {
+                g.drawString(gordo.getDESAPARECE(), burger.getPosX() - burger.getAncho() / 2, burger.getPosY() + burger.getAlto() / 2);
             }
-            g.drawString("Score: " + malos.get(0).getCont(), 25, 40);
+            g.drawImage(burger.getImagen(), burger.getPosX(), burger.getPosY(), this);
+           
+            g.drawString("Score: " + burger.getCont(), 25, 40);
         } else {
             g.drawString("Cargando...", getWidth() / 2, getHeight() / 2);
         }
@@ -288,17 +277,17 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
      * @return objeto de clase <code>Malo</code>
      */
     public Malo crearMalo(int lado) {
-        Malo nuevoParaguas = new Malo();
+        Malo nuevaBurger = new Malo();
 
-        nuevoParaguas.setLado(lado);
+        nuevaBurger.setLado(lado);
 
         //Posiciona al nuevo paraguas aleatoriamente en la parte superior del applet
-        nuevoParaguas.randomResetSide(getHeight(), getWidth());
+        nuevaBurger.randomResetSide(getHeight(), getWidth());
 
         //establece la velocidad del objeto de manera aleatoria entre 3 y 6 px
-        nuevoParaguas.setRandomSpeed(3, 6);
+        nuevaBurger.setRandomSpeed(3, 6);
 
-        return nuevoParaguas;
+        return nuevaBurger;
     }
 
     /**
@@ -345,10 +334,10 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
     public void keyPressed(KeyEvent e) {
         //presiono flecha izquierda
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            ninja.moveLeft();
+            gordo.moveLeft();
             //Presiono flecha derecha
         } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            ninja.moveRight();
+            gordo.moveRight();
             //presiono p
         } else if (e.getKeyCode() == KeyEvent.VK_P) {
             pausado = !pausado;
@@ -357,7 +346,7 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
 
     @Override
     public void keyReleased(KeyEvent e) {
-        ninja.stop();
+        gordo.stop();
     }
 
     @Override
