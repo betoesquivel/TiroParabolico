@@ -63,11 +63,13 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
      */
     public void init() {
         gordo = new Bueno();
-        burger = crearMalo(1);
-        this.setSize(500, 350);
+        this.setSize(800, 400);
 
-        gordo.setPosX(getWidth() / 2 - gordo.getAncho() / 2);
-        gordo.setPosY(getHeight() / 2 - gordo.getAlto() / 2);
+        //Posiciona al gordo en la mitad derecha del applet en la parte de hasta abajo.
+        gordo.setPosX(3 * getWidth() / 4 - gordo.getAncho() / 2);
+        gordo.setPosY(getHeight() - gordo.getAlto() - gordo.getAlto() / 2 + 4);
+
+        burger = crearMalo(1);
 
         //inicializo el marcador en 0
         score = 0;
@@ -262,7 +264,7 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
                 g.drawString(gordo.getDESAPARECE(), burger.getPosX() - burger.getAncho() / 2, burger.getPosY() + burger.getAlto() / 2);
             }
             g.drawImage(burger.getImagen(), burger.getPosX(), burger.getPosY(), this);
-           
+
             g.drawString("Score: " + burger.getCont(), 25, 40);
         } else {
             g.drawString("Cargando...", getWidth() / 2, getHeight() / 2);
@@ -282,10 +284,11 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
         nuevaBurger.setLado(lado);
 
         //Posiciona al nuevo paraguas aleatoriamente en la parte superior del applet
-        nuevaBurger.randomResetSide(getHeight(), getWidth());
+//        nuevaBurger.randomResetSide(getHeight(), getWidth());
+        nuevaBurger.resetPosition();
 
         //establece la velocidad del objeto de manera aleatoria entre 3 y 6 px
-        nuevaBurger.setRandomSpeed(3, 6);
+        nuevaBurger.setSpeed(0);
 
         return nuevaBurger;
     }
@@ -335,9 +338,11 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
         //presiono flecha izquierda
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             gordo.moveLeft();
+            gordo.setDirection(gordo.getLEFT());
             //Presiono flecha derecha
         } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             gordo.moveRight();
+            gordo.setDirection(gordo.getRIGHT());
             //presiono p
         } else if (e.getKeyCode() == KeyEvent.VK_P) {
             pausado = !pausado;

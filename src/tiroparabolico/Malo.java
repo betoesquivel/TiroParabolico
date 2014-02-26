@@ -20,6 +20,8 @@ public class Malo extends Base {
     //Variable con el lado por el que va a entrar (izquierda 1 o derecha 2)
     private int lado;
     private final int DEFAULT_LADO = 1;
+    private final int DEFAULT_X = 55;
+    private final int DEFAULT_Y = 185;
 
     //Control de movimiento
     private int speed;
@@ -62,8 +64,8 @@ public class Malo extends Base {
         /*
          Agrega todos los cuadros a la animacion main con 100ms de duracion
          */
-        for (URL umbrella : burgerURLs) {
-            main.sumaCuadro(Toolkit.getDefaultToolkit().getImage(umbrella), 100);
+        for (URL burger : burgerURLs) {
+            main.sumaCuadro(Toolkit.getDefaultToolkit().getImage(burger), 100);
         }
         /*
          Agrega todos los cuadros a la animacion collision con 100ms de duracion
@@ -130,14 +132,7 @@ public class Malo extends Base {
      * que caiga.
      */
     public void move() {
-        switch (lado) {
-            case 1:
-                setPosX(getPosX() + speed);
-                break;
-            case 2:
-                setPosX(getPosX() - speed);
-                break;
-        }
+        //aqui se actualiza la posicion en x y y de la hamburguesa. 
     }
 
     /**
@@ -176,6 +171,11 @@ public class Malo extends Base {
             setPosX(appletWidth - getAncho());
         }
         setPosY((int) (Math.random() * -200));
+    }
+    
+    public void resetPosition(){
+        setPosX(DEFAULT_X);
+        setPosY(DEFAULT_Y);
     }
 
     /**

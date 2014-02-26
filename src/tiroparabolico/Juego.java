@@ -16,7 +16,7 @@ public class Juego {
     public static void main(String[] args) {
         JFrameJuego1 miJuego = new JFrameJuego1();
         miJuego.setVisible(true);
-        miJuego.setSize(500, 350);
+        miJuego.setSize(800, 380);
         miJuego.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 }
