@@ -202,12 +202,10 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
         }
 
         //checks ninja collision with applet X
-        if (gordo.getPosX() <= 0) {
-            gordo.moveRight();
-            gordo.setDirection(gordo.getRIGHT());
+        if (gordo.getPosX() <= getWidth() / 5) {
+            gordo.stop();
         } else if (gordo.getPosX() >= getWidth() - gordo.getAncho()) {
-            gordo.moveLeft();
-            gordo.setDirection(gordo.getLEFT());
+            gordo.stop();
         }
         //checks ninja collision with applet Y
         if (gordo.getPosY() <= 0) {
@@ -338,11 +336,9 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
         //presiono flecha izquierda
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             gordo.moveLeft();
-            gordo.setDirection(gordo.getLEFT());
             //Presiono flecha derecha
         } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             gordo.moveRight();
-            gordo.setDirection(gordo.getRIGHT());
             //presiono p
         } else if (e.getKeyCode() == KeyEvent.VK_P) {
             pausado = !pausado;
@@ -356,51 +352,24 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
 
     @Override
     public void mouseClicked(MouseEvent me) {
-
-    }
-
-    @Override
-    public void mousePressed(MouseEvent me) {
         //Mouse coordinates
         int mx = me.getX();
         int my = me.getY();
-
-        //Applet dimensions
-        int w = getWidth();
-        int h = getHeight();
-        if (mx >= w / 2) {
-            //cuadrante 1 o 2
-            if (my >= h / 2) {
-                //cuadrante 2
-                cuadranteOprimido = 2;
-            } else {
-                //cuadrante 1
-                cuadranteOprimido = 1;
-            }
-        } else {
-            //cuadrante 3 o 4
-            if (my >= h / 2) {
-                //cuadrante 3
-                cuadranteOprimido = 3;
-            } else {
-                //cuadrante 4
-                cuadranteOprimido = 4;
-            }
-        }
     }
 
     @Override
-    public void mouseReleased(MouseEvent me) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void mousePressed(MouseEvent e) {
     }
 
     @Override
-    public void mouseEntered(MouseEvent me) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void mouseReleased(MouseEvent e) {
     }
 
     @Override
-    public void mouseExited(MouseEvent me) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void mouseEntered(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
     }
 }

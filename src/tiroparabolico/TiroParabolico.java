@@ -34,7 +34,7 @@ public class TiroParabolico {
         //José Alberto Esquivel A01139626   
         //Hugo León Garza A01139720
         JFrameJuego1 juegoTiro = new JFrameJuego1();
-        juegoTiro.setVisible(true);
+        juegoTiro.setVisible(true);     
         juegoTiro.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     
