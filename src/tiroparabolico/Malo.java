@@ -25,13 +25,14 @@ public class Malo extends Base {
     private final int G = 10; //representa la constante de la gravedad. 
     private int despVerticalMaximo; //para que no tope con la parte superior del jframe
     private int despHorizontalMaximo; //para que no tope con la parte lateral del Jframe
+    private boolean hurled; 
 
     //Control de movimiento
     private int speed;
-    private int initialSpeed;
-    private int verticalSpeed; 
-    private int horizontalSpeed;
-    private int angulo; 
+    private int initialSpeed; //mandatory
+    private int verticalSpeed; //optional
+    private int horizontalSpeed; //optional
+    private double angulo; //mandatory
     private final int DEFAULT_SPEED = 10;
     private int direccion;
 
@@ -87,7 +88,7 @@ public class Malo extends Base {
 
         //direccion inicial del malo
         setCorriendoAnimacionBasica(true);
-
+        hurled = false; 
     }
 
     public Malo(int posX, int posY, Animacion animacionBasica) {
@@ -131,18 +132,20 @@ public class Malo extends Base {
     public void fall() {
         setPosY(getPosY() + speed);
     }
-    
+
     /**
-     * Metodo hurl que lanza al objeto malo
-     * en un tiro parabólico.
-     * 
+     * Metodo hurl que lanza al objeto malo en un tiro parabólico.
+     *
      */
     public void randomHurl() {
         //calcular limite minimo y maximo que la velocidad random puede tomar
         //para que no se pase en desplazamiento en Y o en X.
         //Con el limite menor y 0 calcular un valor random.
-       //calcular los limites aceptados de ángulos que puedo tener
+        //calcular los limites aceptados de ángulos que puedo tener
         //con esos limites obtener un ángulo random
+        angulo = 45.0;
+        initialSpeed = 10;
+        setHurled(true);
     }
 
     /**
@@ -151,8 +154,17 @@ public class Malo extends Base {
      * Modifica la posición del objeto malo, aumentando su posición en X para
      * que caiga.
      */
-    public void move() {
+    public void move(int t) {
         //aqui se actualiza la posicion en x y y de la hamburguesa. 
+        //        x = vx0t = v0 (cos q0 )t
+//        y =  vy0t - ½gt2 = v0 (sen q0)t - ½ gt2
+        if (isHurled()) {
+            double newX = initialSpeed * Math.cos(angulo) * t;
+            double newY = initialSpeed * Math.sin(angulo) * t;
+            setPosX((int) newX);
+            setPosY((int) newY);
+        }
+
     }
 
     /**
@@ -192,8 +204,8 @@ public class Malo extends Base {
         }
         setPosY((int) (Math.random() * -200));
     }
-    
-    public void resetPosition(){
+
+    public void resetPosition() {
         setPosX(DEFAULT_X);
         setPosY(DEFAULT_Y);
     }
@@ -216,7 +228,7 @@ public class Malo extends Base {
 //            setPosY((int) (Math.random() * (appletHeight - appletHeight / 2) + appletHeight / 2));
             setPosX((int) (Math.random() * (appletWidth + appletWidth / 4 - appletWidth) + appletWidth));
         }
-        
+
         //el +15 es porque ahora el limite inferior en y no es 0 por la barra que agrega el JFrame a la aplicación.
         setPosY((int) (Math.random() * (appletHeight - 15)) + 15);
 
@@ -226,8 +238,6 @@ public class Malo extends Base {
             setPosY(appletHeight - getAlto());
         }
 
-        
-
 //        setColisionando(false);
 //        setCorriendoAnimacionBasica(true);
         setCollisionCycles(-1);
@@ -236,21 +246,44 @@ public class Malo extends Base {
 
     /* COMPORTAMIENTOS */
     /* SETTERS Y GETTERS */
-    
-    public void setDespVerticalMaximo(int n){
+    public void setDespVerticalMaximo(int n) {
         this.despVerticalMaximo = n;
     }
-    
-    public void setDespHorizontalMaximo(int n){
-        this.despHorizontalMaximo = n; 
+
+    public void setDespHorizontalMaximo(int n) {
+        this.despHorizontalMaximo = n;
     }
-    
+
     public void setInCollision(boolean b) {
         this.inCollision = b;
     }
 
     public boolean isInCollision() {
         return this.inCollision;
+    }
+
+    public boolean isHurled() {
+        return hurled;
+    }
+
+    public void setHurled(boolean hurled) {
+        this.hurled = hurled;
+    }
+
+    public int getInitialSpeed() {
+        return initialSpeed;
+    }
+
+    public void setInitialSpeed(int initialSpeed) {
+        this.initialSpeed = initialSpeed;
+    }
+
+    public double getAngulo() {
+        return angulo;
+    }
+
+    public void setAngulo(double angulo) {
+        this.angulo = angulo;
     }
 
     /**

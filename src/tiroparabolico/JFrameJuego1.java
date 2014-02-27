@@ -45,6 +45,7 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
     private long tiempoActual;
     private long tiempoInicial;
     int posX, posY;
+    int timer;
 
     //sonidos
     private SoundClip sonido;    // Objeto AudioClip
@@ -163,8 +164,9 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
             gordo.updateAnimation(tiempoTranscurrido);
         }
 
+        timer += 1; 
         if (!burger.isInCollision()) {
-            burger.move();
+            burger.move(timer);
         }
         burger.updateAnimation(tiempoTranscurrido);
 
@@ -183,7 +185,9 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
         if (burger.isInCollision()) {
             burger.decreaseCollisionCounter();
             if (burger.getCollisionCycles() < 0) {
+                burger.setHurled(false);
                 burger.resetPosition();
+                timer = 0; 
             }
         } else {
             if (burger.intersecta(gordo)) {
@@ -366,6 +370,10 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
         //Mouse coordinates
         int mx = me.getX();
         int my = me.getY();
+        
+        //luego checo si le pique a la hamburguesa
+        burger.randomHurl();
+        timer = 0; 
     }
 
     @Override
