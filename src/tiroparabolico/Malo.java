@@ -22,10 +22,10 @@ public class Malo extends Base {
     private final int DEFAULT_LADO = 1;
     private final int DEFAULT_X = 55; //posicionado encima de la plataforma
     private final int DEFAULT_Y = 185;
-    private final int G = 10; //representa la constante de la gravedad. 
+    private final double G = 10.0; //representa la constante de la gravedad. 
     private int despVerticalMaximo; //para que no tope con la parte superior del jframe
     private int despHorizontalMaximo; //para que no tope con la parte lateral del Jframe
-    private boolean hurled; 
+    private boolean hurled;
 
     //Control de movimiento
     private int speed;
@@ -88,7 +88,7 @@ public class Malo extends Base {
 
         //direccion inicial del malo
         setCorriendoAnimacionBasica(true);
-        hurled = false; 
+        hurled = false;
     }
 
     public Malo(int posX, int posY, Animacion animacionBasica) {
@@ -144,7 +144,7 @@ public class Malo extends Base {
         //calcular los limites aceptados de ángulos que puedo tener
         //con esos limites obtener un ángulo random
         angulo = 45.0;
-        initialSpeed = 5;
+        initialSpeed = setRandomSpeed(2, 10);
         setHurled(true);
     }
 
@@ -159,11 +159,11 @@ public class Malo extends Base {
         //        x = vx0t = v0 (cos q0 )t
 //        y =  vy0t - ½gt2 = v0 (sen q0)t - ½ gt2
         if (isHurled()) {
-            double newX = initialSpeed * Math.cos(angulo) * t;
-            double newY = (initialSpeed * Math.sin(angulo) * t - ((1/2) * G * t * t) );
-            
-            setPosX(DEFAULT_X + (int) newX);
-            setPosY(DEFAULT_Y - (int) newY);
+            double newX = initialSpeed * Math.cos(angulo) * t * 1.0;
+            double newY = (initialSpeed * Math.sin(angulo) * t * 1.0 - ((1 / 2) * G * t * t * 1.0));
+
+            setPosX(DEFAULT_X + (int) Math.round(newX));
+            setPosY(DEFAULT_Y - (int) Math.round(newY));
         }
 
     }
@@ -177,9 +177,9 @@ public class Malo extends Base {
      * @param lower velocidad minima de tipo <code>int</code>
      * @param upper velocidad maxima de tipo <code>int</code>
      */
-    public void setRandomSpeed(int lower, int upper) {
+    public int setRandomSpeed(int lower, int upper) {
         int R = (int) (Math.random() * (upper - lower)) + lower;
-        setSpeed(R);
+        return R;
     }
 
     /**
