@@ -183,7 +183,7 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
         if (burger.isInCollision()) {
             burger.decreaseCollisionCounter();
             if (burger.getCollisionCycles() < 0) {
-                burger.randomResetSide(getHeight(), getWidth());
+                burger.resetPosition();
             }
         } else {
             if (burger.intersecta(gordo)) {
@@ -195,10 +195,13 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
 
         //Checa colision con el applet
         if (burger.getLado() == 1 && burger.getPosX() > (getWidth() - burger.getAncho())) {
-            burger.randomResetSide(getHeight(), getWidth());
+            burger.resetPosition();
 
         } else if (burger.getLado() == 2 && burger.getPosX() < 0) {
-            burger.randomResetSide(getHeight(), getWidth());
+            burger.resetPosition();
+        }
+        if(burger.getPosY() == (getHeight() - burger.getAlto())){
+            burger.resetPosition();
         }
 
         //checks ninja collision with applet X

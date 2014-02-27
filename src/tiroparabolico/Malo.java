@@ -20,11 +20,18 @@ public class Malo extends Base {
     //Variable con el lado por el que va a entrar (izquierda 1 o derecha 2)
     private int lado;
     private final int DEFAULT_LADO = 1;
-    private final int DEFAULT_X = 55;
+    private final int DEFAULT_X = 55; //posicionado encima de la plataforma
     private final int DEFAULT_Y = 185;
+    private final int G = 10; //representa la constante de la gravedad. 
+    private int despVerticalMaximo; //para que no tope con la parte superior del jframe
+    private int despHorizontalMaximo; //para que no tope con la parte lateral del Jframe
 
     //Control de movimiento
     private int speed;
+    private int initialSpeed;
+    private int verticalSpeed; 
+    private int horizontalSpeed;
+    private int angulo; 
     private final int DEFAULT_SPEED = 10;
     private int direccion;
 
@@ -124,6 +131,19 @@ public class Malo extends Base {
     public void fall() {
         setPosY(getPosY() + speed);
     }
+    
+    /**
+     * Metodo hurl que lanza al objeto malo
+     * en un tiro parabólico.
+     * 
+     */
+    public void randomHurl() {
+        //calcular limite minimo y maximo que la velocidad random puede tomar
+        //para que no se pase en desplazamiento en Y o en X.
+        //Con el limite menor y 0 calcular un valor random.
+       //calcular los limites aceptados de ángulos que puedo tener
+        //con esos limites obtener un ángulo random
+    }
 
     /**
      * Método move
@@ -216,6 +236,15 @@ public class Malo extends Base {
 
     /* COMPORTAMIENTOS */
     /* SETTERS Y GETTERS */
+    
+    public void setDespVerticalMaximo(int n){
+        this.despVerticalMaximo = n;
+    }
+    
+    public void setDespHorizontalMaximo(int n){
+        this.despHorizontalMaximo = n; 
+    }
+    
     public void setInCollision(boolean b) {
         this.inCollision = b;
     }
