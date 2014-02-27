@@ -181,8 +181,8 @@ public class Bueno extends Base {
      * recibida de parametro.
      * @param direction que se está checando
      */
-    public void canMove(int direction){
-        
+    public boolean canMove(int direction){
+        return true; 
     }
     
     public void moveRight() {
