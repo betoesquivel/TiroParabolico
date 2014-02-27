@@ -77,9 +77,10 @@ public class Bueno extends Base {
         setAnimacionBasica(parado);
         setAnimacionCaminarDerecha(derecha);
         setAnimacionCaminarIzquierda(izquierda);
-
+        
+        setHaciaLaDerecha(true);
         //direccion inicial del ninja
-        setCorriendoAnimacionBasica(true);
+//        setCorriendoAnimacionBasica(true);
     }
 
     public Bueno(int posX, int posY, Animacion animacionBasica) {
@@ -173,17 +174,6 @@ public class Bueno extends Base {
     }
 
     /* GETTERS y SETTERS */
-
-    /* COMPORTAMIENTOS */
-    /**
-     * Metodo canMove 
-     * checa si el objeto se puede mover en la direccion
-     * recibida de parametro.
-     * @param direction que se está checando
-     */
-    public boolean canMove(int direction){
-        return true; 
-    }
     
     public void moveRight() {
         setHaciaLaIzquierda(false);
@@ -200,9 +190,9 @@ public class Bueno extends Base {
     }
 
     public void stop() {
-        setHaciaLaIzquierda(false);
-        setHaciaLaDerecha(false);
-        setCorriendoAnimacionBasica(true);
+//        setHaciaLaIzquierda(false);
+//        setHaciaLaDerecha(false);
+//        setCorriendoAnimacionBasica(true);
         setDirection(STOPPED);
     }
 

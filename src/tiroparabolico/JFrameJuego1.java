@@ -156,12 +156,12 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
 
         //Guarda el tiempo actual
         tiempoActual += tiempoTranscurrido;
-        if (cuadranteOprimido != -1) {
-            gordo.setDirection(cuadranteOprimido);
-            cuadranteOprimido = -1;
+
+        //Como el gordo no tiene animacion basica, si no se está moviendo, no hago nada.
+        if (gordo.getDirection() != gordo.getSTOPPED()) {
+            gordo.move();
+            gordo.updateAnimation(tiempoTranscurrido);
         }
-        gordo.move();
-        gordo.updateAnimation(tiempoTranscurrido);
 
         if (!burger.isInCollision()) {
             burger.move();
@@ -335,10 +335,18 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
     public void keyPressed(KeyEvent e) {
         //presiono flecha izquierda
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            gordo.moveLeft();
+            if (gordo.getPosX() <= getWidth() / 5) {
+                gordo.stop();
+            } else {
+                gordo.moveLeft();
+            }
             //Presiono flecha derecha
         } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            gordo.moveRight();
+            if (gordo.getPosX() >= getWidth() - gordo.getAncho()) {
+                gordo.stop();
+            } else {
+                gordo.moveRight();
+            }
             //presiono p
         } else if (e.getKeyCode() == KeyEvent.VK_P) {
             pausado = !pausado;
