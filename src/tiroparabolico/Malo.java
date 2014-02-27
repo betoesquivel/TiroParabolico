@@ -144,7 +144,7 @@ public class Malo extends Base {
         //calcular los limites aceptados de ángulos que puedo tener
         //con esos limites obtener un ángulo random
         angulo = 45.0;
-        initialSpeed = 10;
+        initialSpeed = 5;
         setHurled(true);
     }
 
@@ -160,9 +160,10 @@ public class Malo extends Base {
 //        y =  vy0t - ½gt2 = v0 (sen q0)t - ½ gt2
         if (isHurled()) {
             double newX = initialSpeed * Math.cos(angulo) * t;
-            double newY = initialSpeed * Math.sin(angulo) * t;
-            setPosX((int) newX);
-            setPosY((int) newY);
+            double newY = (initialSpeed * Math.sin(angulo) * t - ((1/2) * G * t * t) );
+            
+            setPosX(DEFAULT_X + (int) newX);
+            setPosY(DEFAULT_Y - (int) newY);
         }
 
     }

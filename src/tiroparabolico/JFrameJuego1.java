@@ -271,6 +271,7 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
             g.drawImage(burger.getImagen(), burger.getPosX(), burger.getPosY(), this);
 
             g.drawString("Score: " + burger.getCont(), 25, 40);
+            g.drawString("Timer: " + timer, 25, 80);
         } else {
             g.drawString("Cargando...", getWidth() / 2, getHeight() / 2);
         }
