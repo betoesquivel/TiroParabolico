@@ -26,6 +26,8 @@ public class Bueno extends Base {
 
     private int speed;
     private int direction;
+    
+    private int vidas; //variable para controlar vidas;
 
     private boolean colision; //true si esta en colision
 
@@ -49,6 +51,7 @@ public class Bueno extends Base {
      * Default Constructor that loads images in the arrays mentioned above...
      */
     public Bueno() {
+        vidas = 5;
         speed = DEFAULT_SPEED;
         Animacion parado = new Animacion();
         Animacion derecha = new Animacion();
@@ -98,6 +101,14 @@ public class Bueno extends Base {
 
     public String getDESAPARECE() {
         return DESAPARECE;
+    }
+    
+    public void setVidas(int v) {
+        vidas = v;
+    }
+    
+    public int getVidas() {
+        return vidas;
     }
 
     /**

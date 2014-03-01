@@ -95,6 +95,10 @@ public class Base {
     public Rectangle getPerimetro() {
         return new Rectangle(getPosX(), getPosY(), getAncho(), getAlto());
     }
+    
+    public boolean isClicked(int x, int y) {
+        return this.getPerimetro().contains(x, y);
+    }
 
     public void updateAnimation(long tiempoTranscurrido) {
         Animacion anim = new Animacion();
