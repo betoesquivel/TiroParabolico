@@ -45,7 +45,7 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
     private long tiempoActual;
     private long tiempoInicial;
     int posX, posY;
-    int timer;
+    double timer;
 
     //sonidos
     private SoundClip sonido;    // Objeto AudioClip
@@ -164,7 +164,7 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
             gordo.updateAnimation(tiempoTranscurrido);
         }
 
-        timer += 1; 
+        timer += 0.2; 
         if (!burger.isInCollision()) {
             burger.move(timer);
         }

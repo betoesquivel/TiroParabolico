@@ -143,8 +143,8 @@ public class Malo extends Base {
         //Con el limite menor y 0 calcular un valor random.
         //calcular los limites aceptados de ángulos que puedo tener
         //con esos limites obtener un ángulo random
-        angulo = 0.3;
-        initialSpeed = setRandomSpeed(10, 15);
+    
+        initialSpeed = setRandomSpeed(20, 85);
         setHurled(true);
     }
 
@@ -154,13 +154,13 @@ public class Malo extends Base {
      * Modifica la posición del objeto malo, aumentando su posición en X para
      * que caiga.
      */
-    public void move(int t) {
+    public void move(double t) {
         //aqui se actualiza la posicion en x y y de la hamburguesa. 
         //        x = vx0t = v0 (cos q0 )t
 //        y =  vy0t - ½gt2 = v0 (sen q0)t - ½ gt2
         if (isHurled()) {
-            double newX = initialSpeed * Math.cos(angulo) * t * 1.0;
-            double newY = (initialSpeed * Math.sin(angulo) * t * 1.0 - ((1 / 2) * G * t * t * 1.0));
+            double newX = initialSpeed * (0.72) * t * 1.0;
+            double newY = (initialSpeed * (0.72) * t * 1.0 - ((0.5) * G * t * t));
 
             setPosX(DEFAULT_X + (int) newX);
             setPosY(DEFAULT_Y - (int) newY);
