@@ -457,7 +457,7 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
         int my = me.getY();
 
         //luego checo si le pique a la hamburguesa
-        if(burger.isClicked(mx, my)) {
+        if(burger.isClicked(mx, my) && !burger.isHurled()) {
             burger.randomHurl();
             timer = 0;
         }
