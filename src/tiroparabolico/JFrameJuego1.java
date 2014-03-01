@@ -185,7 +185,7 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
         }
 
         timer += 0.3;
-        if (!burger.isInCollision()) {
+        if (burger.isHurled()) {
             burger.move(timer);
         }
         burger.updateAnimation(tiempoTranscurrido);
@@ -220,31 +220,20 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
      * con las orillas del <code>Applet</code>.
      */
     public void checaColision() {
-        if (burger.isInCollision()) {
-            burger.decreaseCollisionCounter();
-            if (burger.getCollisionCycles() < 0) {
-                burger.setHurled(false);
-                burger.resetPosition();
-                timer = 0;
-            }
-        } else {
-            if (burger.intersecta(gordo)) {
-                gordo.setVidas(gordo.getVidas() - 1);
-                burger.collideSides();
-                burger.setCont(burger.getCont() + 1);
-                sonido.play();
-            }
+        if (burger.intersecta(gordo)) {
+            burger.setCont(burger.getCont() + 1);
+            burger.resetPosition();
+            timer = 0;
+            burger.setHurled(false);
+            sonido.play();
         }
 
         //Checa colision con el applet
-        if (burger.getLado() == 1 && burger.getPosX() > (getWidth() - burger.getAncho())) {
+        if (burger.getPosY() >= (getHeight() - burger.getAlto())) {
             burger.resetPosition();
-
-        } else if (burger.getLado() == 2 && burger.getPosX() < 0) {
-            burger.resetPosition();
-        }
-        if (burger.getPosY() == (getHeight() - burger.getAlto())) {
-            burger.resetPosition();
+            timer = 0;
+            burger.setHurled(false);
+            gordo.setVidas(gordo.getVidas() - 1);
         }
 
         //checks fat guy collision with applet X
@@ -298,8 +287,8 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
     public void paint1(Graphics g) {
         // Muestra en pantalla el cuadro actual de la animación
         if (gordo != null && burger != null) {
-            if(gordo.getVidas()>0) {
-                if(mostrarInstrucciones) {
+            if (gordo.getVidas() > 0) {
+                if (mostrarInstrucciones) {
                     g.drawImage(imgInstrucciones, 80, 50, this);
                 } else {
                     if (pausado) {
@@ -413,7 +402,7 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
             gordo.setPosX(Integer.parseInt(infoGordo[0]));
             gordo.setPosY(Integer.parseInt(infoGordo[1]));
             gordo.setVidas(Integer.parseInt(infoGordo[2]));
-            
+
             timer = Double.parseDouble(infoGeneral[0]);
 
         }
@@ -465,13 +454,17 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
             }
             //presiono p
         } else if (e.getKeyCode() == KeyEvent.VK_P) {
-            if(!mostrarInstrucciones) {
+            if (!mostrarInstrucciones) {
                 pausado = !pausado;
             }
         } else if (e.getKeyCode() == KeyEvent.VK_G) {
-            guardar = true;
+            if (!mostrarInstrucciones) {
+                guardar = true;
+            }
         } else if (e.getKeyCode() == KeyEvent.VK_C) {
-            cargar = true;
+            if (!mostrarInstrucciones) {
+                cargar = true;
+            }
         } else if (e.getKeyCode() == KeyEvent.VK_I) {
             mostrarInstrucciones = !mostrarInstrucciones;
         }

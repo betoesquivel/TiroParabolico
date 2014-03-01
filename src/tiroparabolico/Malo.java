@@ -104,8 +104,8 @@ public class Malo extends Base {
      * Metodo collide que actualiza la posicion del paraguas y
      *
      */
-    public void collide(int appletWidth) {
-        randomReset(appletWidth);
+    public void collide() {
+        resetPosition();
     }
 
     /**
