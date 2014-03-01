@@ -212,20 +212,11 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
      * con las orillas del <code>Applet</code>.
      */
     public void checaColision() {
-        if (burger.isInCollision()) {
-            burger.decreaseCollisionCounter();
-            if (burger.getCollisionCycles() < 0) {
-                burger.setHurled(false);
-                burger.resetPosition();
-                timer = 0;
-            }
-        } else {
-            if (burger.intersecta(gordo)) {
-                gordo.setVidas(gordo.getVidas() - 1);
-                burger.collideSides();
-                burger.setCont(burger.getCont() + 1);
-                sonido.play();
-            }
+        if (burger.intersecta(gordo)) {
+            gordo.setVidas(gordo.getVidas() - 1);
+            burger.setCont(burger.getCont() + 1);
+            burger.collide();
+            sonido.play();
         }
 
         //Checa colision con el applet
@@ -399,7 +390,7 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
             gordo.setPosX(Integer.parseInt(infoGordo[0]));
             gordo.setPosY(Integer.parseInt(infoGordo[1]));
             gordo.setVidas(Integer.parseInt(infoGordo[2]));
-            
+
             timer = Double.parseDouble(infoGeneral[0]);
 
         }
