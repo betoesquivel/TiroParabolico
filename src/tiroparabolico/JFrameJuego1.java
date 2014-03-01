@@ -288,9 +288,6 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
                 if (mostrarInstrucciones) {
                     g.drawImage(imgInstrucciones, 80, 50, this);
                 } else {
-                    if (pausado) {
-                        g.drawString(gordo.getPAUSADO(), gordo.getPosX() - gordo.getAncho() / 2, gordo.getPosY() + gordo.getAlto() / 2);
-                    }
                     g.drawImage(gordo.getImagen(), gordo.getPosX(), gordo.getPosY(), this);
 
                     if (burger.isInCollision()) {
@@ -393,6 +390,7 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
             burger.setPosX(Integer.parseInt(infoBurger[0]));
             burger.setPosY(Integer.parseInt(infoBurger[1]));
             burger.setCont(Integer.parseInt(infoBurger[2]));
+            burger.setHurled(Boolean.parseBoolean(infoBurger[3]));
 
             gordo.setPosX(Integer.parseInt(infoGordo[0]));
             gordo.setPosY(Integer.parseInt(infoGordo[1]));
@@ -415,7 +413,7 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
         PrintWriter fileOut = new PrintWriter(new FileWriter(nombreArchivo));
 
         //guardo posicion posicion burger
-        String infoBurger = burger.getPosX() + divisor + burger.getPosY() + divisor + burger.getCont();
+        String infoBurger = burger.getPosX() + divisor + burger.getPosY() + divisor + burger.getCont() + divisor + burger.isHurled();
         String infoGordo = gordo.getPosX() + divisor + gordo.getPosY() + divisor + gordo.getVidas();
         String infoGeneral = timer + divisor;
         fileOut.println(infoBurger);

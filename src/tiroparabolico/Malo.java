@@ -101,7 +101,7 @@ public class Malo extends Base {
 
     /* COMPORTAMIENTOS */
     /**
-     * Metodo collide que actualiza la posicion del paraguas y
+     * Metodo collide que actualiza la posicion de la hamburguesa
      *
      */
     public void collide() {
@@ -144,7 +144,7 @@ public class Malo extends Base {
         //calcular los limites aceptados de ángulos que puedo tener
         //con esos limites obtener un ángulo random
     
-        initialSpeed = setRandomSpeed(20, 75);
+        initialSpeed = setRandomSpeed(20, 70);
         setHurled(true);
     }
 
