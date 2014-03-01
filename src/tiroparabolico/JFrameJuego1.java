@@ -9,16 +9,21 @@ package tiroparabolico;
  *
  * @author ppesq
  */
-import java.applet.AudioClip;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Color;
-import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.util.LinkedList;
 import javax.swing.JFrame;
@@ -46,6 +51,12 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
     private long tiempoInicial;
     int posX, posY;
     double timer;
+
+    //Almacenamiento
+    private final String nombreArchivo = "datos.txt";
+    private final String divisor = ",";
+    private boolean guardar;
+    private boolean cargar;
 
     //sonidos
     private SoundClip sonido;    // Objeto AudioClip
@@ -77,6 +88,7 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
 
         //el juego no esta pausado
         pausado = false;
+        guardar = cargar = false;
 
         //se cargan los sonidos
         sonido = new SoundClip(saURL);
@@ -164,7 +176,7 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
             gordo.updateAnimation(tiempoTranscurrido);
         }
 
-        timer += 0.2; 
+        timer += 0.2;
         if (!burger.isInCollision()) {
             burger.move(timer);
         }
@@ -173,6 +185,24 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
         try {
             Thread.sleep(20);
         } catch (InterruptedException ex) {
+        }
+
+        if (cargar) {
+            try {
+                cargarJuego();    //lee el contenido del archivo
+            } catch (IOException e) {
+                System.out.println("Error en " + e.toString());
+            }
+            cargar = false;
+        }
+
+        if (guardar) {
+            try {
+                grabarJuego();    //Graba el vector en el archivo.
+            } catch (IOException e) {
+                System.out.println("Error en " + e.toString());
+            }
+            guardar = false;
         }
 
     }
@@ -187,7 +217,7 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
             if (burger.getCollisionCycles() < 0) {
                 burger.setHurled(false);
                 burger.resetPosition();
-                timer = 0; 
+                timer = 0;
             }
         } else {
             if (burger.intersecta(gordo)) {
@@ -204,17 +234,17 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
         } else if (burger.getLado() == 2 && burger.getPosX() < 0) {
             burger.resetPosition();
         }
-        if(burger.getPosY() == (getHeight() - burger.getAlto())){
+        if (burger.getPosY() == (getHeight() - burger.getAlto())) {
             burger.resetPosition();
         }
 
-        //checks ninja collision with applet X
+        //checks fat guy collision with applet X
         if (gordo.getPosX() <= getWidth() / 5) {
             gordo.stop();
         } else if (gordo.getPosX() >= getWidth() - gordo.getAncho()) {
             gordo.stop();
         }
-        //checks ninja collision with applet Y
+        //checks fat guy collision with applet Y
         if (gordo.getPosY() <= 0) {
             gordo.setDirection(gordo.getDOWN());
 
@@ -334,6 +364,52 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
         return malos;
     }
 
+    /**
+     * Metodo que lee a informacion de un archivo y lo agrega a un vector.
+     *
+     * @throws IOException
+     */
+    public void cargarJuego() throws IOException {
+        BufferedReader fileIn;
+        try {
+            fileIn = new BufferedReader(new FileReader(nombreArchivo));
+        } catch (FileNotFoundException e) {
+            File puntos = new File(nombreArchivo);
+            PrintWriter fileOut = new PrintWriter(puntos);
+            fileOut.println("100,demo");
+            fileOut.close();
+            fileIn = new BufferedReader(new FileReader(nombreArchivo));
+        }
+        String dato = fileIn.readLine();
+
+        while (dato != null) {
+            
+            dato = fileIn.readLine();
+        }
+        fileIn.close();
+        cargar = false; 
+    }
+
+    /**
+     * Metodo que agrega la informacion del vector al archivo.
+     *
+     * @throws IOException
+     */
+    public void grabarJuego() throws IOException {
+        PrintWriter fileOut = new PrintWriter(new FileWriter(nombreArchivo));
+        
+        //guardo posicion posicion burger
+        String infoBurger = burger.getPosX() + divisor + burger.getPosY(); 
+        String infoGordo = gordo.getPosX() + divisor + gordo.getPosY();
+        String infoGeneral = score + divisor + timer + divisor; 
+        fileOut.println(infoBurger); 
+        fileOut.println(infoGordo); 
+        fileOut.println(infoGeneral); 
+       
+        fileOut.close();
+        guardar = false; 
+    }
+
     @Override
     public void keyTyped(KeyEvent e) {
 
@@ -358,6 +434,10 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
             //presiono p
         } else if (e.getKeyCode() == KeyEvent.VK_P) {
             pausado = !pausado;
+        } else if (e.getKeyCode() == KeyEvent.VK_G) {
+            guardar = true; 
+        } else if (e.getKeyCode() == KeyEvent.VK_C) {
+            cargar = true; 
         }
     }
 
@@ -371,10 +451,10 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
         //Mouse coordinates
         int mx = me.getX();
         int my = me.getY();
-        
+
         //luego checo si le pique a la hamburguesa
         burger.randomHurl();
-        timer = 0; 
+        timer = 0;
     }
 
     @Override
