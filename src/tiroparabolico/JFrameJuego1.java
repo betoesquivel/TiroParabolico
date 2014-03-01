@@ -176,7 +176,7 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
             gordo.updateAnimation(tiempoTranscurrido);
         }
 
-        timer += 0.3; 
+        timer += 0.3;
         if (!burger.isInCollision()) {
             burger.move(timer);
         }
@@ -290,7 +290,7 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
     public void paint1(Graphics g) {
         // Muestra en pantalla el cuadro actual de la animación
         if (gordo != null && burger != null) {
-            if(gordo.getVidas()>0) {
+            if (gordo.getVidas() > 0) {
                 if (pausado) {
                     g.drawString(gordo.getPAUSADO(), gordo.getPosX() - gordo.getAncho() / 2, gordo.getPosY() + gordo.getAlto() / 2);
                 }
@@ -387,9 +387,20 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
         String dato = fileIn.readLine();
         if (!dato.contentEquals("Demo") && dato != null) {
             //El archivo tiene contenido
-            String [] infoBurger = dato.split(",");
-            String [] infoGordo = fileIn.readLine().split(",");
-            String [] infoGeneral = fileIn.readLine().split(",");
+            String[] infoBurger = dato.split(",");
+            String[] infoGordo = fileIn.readLine().split(",");
+            String[] infoGeneral = fileIn.readLine().split(",");
+
+            //modifico las variables del juego en base a lo que leo
+            burger.setPosX(Integer.parseInt(infoBurger[0]));
+            burger.setPosY(Integer.parseInt(infoBurger[1]));
+            burger.setCont(Integer.parseInt(infoBurger[2]));
+
+            gordo.setPosX(Integer.parseInt(infoGordo[0]));
+            gordo.setPosY(Integer.parseInt(infoGordo[1]));
+            
+            timer = Double.parseDouble(infoGeneral[0]);
+
         }
 
         fileIn.close();
@@ -405,9 +416,9 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
         PrintWriter fileOut = new PrintWriter(new FileWriter(nombreArchivo));
 
         //guardo posicion posicion burger
-        String infoBurger = burger.getPosX() + divisor + burger.getPosY();
+        String infoBurger = burger.getPosX() + divisor + burger.getPosY() + divisor + burger.getCont();
         String infoGordo = gordo.getPosX() + divisor + gordo.getPosY();
-        String infoGeneral = score + divisor + timer + divisor;
+        String infoGeneral = timer + divisor;
         fileOut.println(infoBurger);
         fileOut.println(infoGordo);
         fileOut.println(infoGeneral);
@@ -459,7 +470,7 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
         int my = me.getY();
 
         //luego checo si le pique a la hamburguesa
-        if(burger.isClicked(mx, my) && !burger.isHurled()) {
+        if (burger.isClicked(mx, my) && !burger.isHurled()) {
             burger.randomHurl();
             timer = 0;
         }
