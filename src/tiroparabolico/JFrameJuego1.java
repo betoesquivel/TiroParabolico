@@ -374,20 +374,22 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
         try {
             fileIn = new BufferedReader(new FileReader(nombreArchivo));
         } catch (FileNotFoundException e) {
-            File puntos = new File(nombreArchivo);
-            PrintWriter fileOut = new PrintWriter(puntos);
-            fileOut.println("100,demo");
+            File datos = new File(nombreArchivo);
+            PrintWriter fileOut = new PrintWriter(datos);
+            fileOut.println("Demo");
             fileOut.close();
             fileIn = new BufferedReader(new FileReader(nombreArchivo));
         }
         String dato = fileIn.readLine();
-
-        while (dato != null) {
-            
-            dato = fileIn.readLine();
+        if (!dato.contentEquals("Demo") && dato != null) {
+            //El archivo tiene contenido
+            String [] infoBurger = dato.split(",");
+            String [] infoGordo = fileIn.readLine().split(",");
+            String [] infoGeneral = fileIn.readLine().split(",");
         }
+
         fileIn.close();
-        cargar = false; 
+        cargar = false;
     }
 
     /**
@@ -397,17 +399,17 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
      */
     public void grabarJuego() throws IOException {
         PrintWriter fileOut = new PrintWriter(new FileWriter(nombreArchivo));
-        
+
         //guardo posicion posicion burger
-        String infoBurger = burger.getPosX() + divisor + burger.getPosY(); 
+        String infoBurger = burger.getPosX() + divisor + burger.getPosY();
         String infoGordo = gordo.getPosX() + divisor + gordo.getPosY();
-        String infoGeneral = score + divisor + timer + divisor; 
-        fileOut.println(infoBurger); 
-        fileOut.println(infoGordo); 
-        fileOut.println(infoGeneral); 
-       
+        String infoGeneral = score + divisor + timer + divisor;
+        fileOut.println(infoBurger);
+        fileOut.println(infoGordo);
+        fileOut.println(infoGeneral);
+
         fileOut.close();
-        guardar = false; 
+        guardar = false;
     }
 
     @Override
@@ -435,9 +437,9 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
         } else if (e.getKeyCode() == KeyEvent.VK_P) {
             pausado = !pausado;
         } else if (e.getKeyCode() == KeyEvent.VK_G) {
-            guardar = true; 
+            guardar = true;
         } else if (e.getKeyCode() == KeyEvent.VK_C) {
-            cargar = true; 
+            cargar = true;
         }
     }
 
