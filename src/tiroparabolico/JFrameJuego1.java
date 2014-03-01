@@ -164,7 +164,7 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
             gordo.updateAnimation(tiempoTranscurrido);
         }
 
-        timer += 0.2; 
+        timer += 0.3; 
         if (!burger.isInCollision()) {
             burger.move(timer);
         }
