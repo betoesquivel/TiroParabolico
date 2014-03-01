@@ -36,7 +36,9 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
     private Image dbImage;    // Imagen a proyectar
     private Graphics dbg;	// Objeto grafico
     private Image background;
+    private Image imgInstrucciones;
     private URL backgroundURL = this.getClass().getResource("images/PlataformaYPaisaje.png");
+    private URL instruccionesURL = this.getClass().getResource("images/instrucciones.jpg");
 
     //Personajes en el juego
     private Bueno gordo;    //objeto bueno, controlable con el teclado
@@ -46,6 +48,7 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
     private int score;
     private boolean pausado;
     private int cuadranteOprimido;
+    private boolean mostrarInstrucciones;
     //Variables de control de tiempo de la animación
     private long tiempoActual;
     private long tiempoInicial;
@@ -89,12 +92,14 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
         //el juego no esta pausado
         pausado = false;
         guardar = cargar = false;
+        mostrarInstrucciones = true;
 
         //se cargan los sonidos
         sonido = new SoundClip(saURL);
         bomb = new SoundClip(baURL);
 
         background = Toolkit.getDefaultToolkit().getImage(backgroundURL);
+        imgInstrucciones = Toolkit.getDefaultToolkit().getImage(instruccionesURL);
         //Pinta el fondo del Applet con una imagen		
         setBackground(Color.white);
         addKeyListener(this);
@@ -139,7 +144,7 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
 
         //Ciclo principal del Applet. Actualiza y despliega en pantalla la animación hasta que el Applet sea cerrado
         while (gordo.getVidas() > 0) {
-            if (!pausado) {
+            if (!pausado && !mostrarInstrucciones) {
                 //Actualiza la animación
                 actualiza();
 
@@ -281,19 +286,23 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
     public void paint1(Graphics g) {
         // Muestra en pantalla el cuadro actual de la animación
         if (gordo != null && burger != null) {
-            if (gordo.getVidas() > 0) {
-                if (pausado) {
-                    g.drawString(gordo.getPAUSADO(), gordo.getPosX() - gordo.getAncho() / 2, gordo.getPosY() + gordo.getAlto() / 2);
-                }
-                g.drawImage(gordo.getImagen(), gordo.getPosX(), gordo.getPosY(), this);
+            if(gordo.getVidas()>0) {
+                if(mostrarInstrucciones) {
+                    g.drawImage(imgInstrucciones, 80, 50, this);
+                } else {
+                    if (pausado) {
+                        g.drawString(gordo.getPAUSADO(), gordo.getPosX() - gordo.getAncho() / 2, gordo.getPosY() + gordo.getAlto() / 2);
+                    }
+                    g.drawImage(gordo.getImagen(), gordo.getPosX(), gordo.getPosY(), this);
 
-                if (burger.isInCollision()) {
-                    g.drawString(gordo.getDESAPARECE(), burger.getPosX() - burger.getAncho() / 2, burger.getPosY() + burger.getAlto() / 2);
-                }
-                g.drawImage(burger.getImagen(), burger.getPosX(), burger.getPosY(), this);
+                    if (burger.isInCollision()) {
+                        g.drawString(gordo.getDESAPARECE(), burger.getPosX() - burger.getAncho() / 2, burger.getPosY() + burger.getAlto() / 2);
+                    }
+                    g.drawImage(burger.getImagen(), burger.getPosX(), burger.getPosY(), this);
 
-                g.drawString("Score: " + burger.getCont(), 25, 40);
-                g.drawString("Timer: " + timer, 25, 80);
+                    g.drawString("Score: " + burger.getCont(), 25, 40);
+                    g.drawString("Vidas: " + gordo.getVidas(), 25, 60);
+                }
             } else {
                 g.drawString("GAME OVER!!!", getWidth() - 10, getHeight());
             }
@@ -442,11 +451,15 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
             }
             //presiono p
         } else if (e.getKeyCode() == KeyEvent.VK_P) {
-            pausado = !pausado;
+            if(!mostrarInstrucciones) {
+                pausado = !pausado;
+            }
         } else if (e.getKeyCode() == KeyEvent.VK_G) {
             guardar = true;
         } else if (e.getKeyCode() == KeyEvent.VK_C) {
             cargar = true;
+        } else if (e.getKeyCode() == KeyEvent.VK_I) {
+            mostrarInstrucciones = !mostrarInstrucciones;
         }
     }
 
