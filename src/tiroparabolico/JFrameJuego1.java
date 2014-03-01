@@ -37,8 +37,10 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
     private Graphics dbg;	// Objeto grafico
     private Image background;
     private Image imgInstrucciones;
+    private Image imgCreditos;
     private URL backgroundURL = this.getClass().getResource("images/PlataformaYPaisaje.png");
     private URL instruccionesURL = this.getClass().getResource("images/instrucciones.jpg");
+    private URL creditosURL = this.getClass().getResource("images/creditos.png");
 
     //Personajes en el juego
     private Bueno gordo;    //objeto bueno, controlable con el teclado
@@ -99,6 +101,7 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
         bomb = new SoundClip(baURL);
 
         background = Toolkit.getDefaultToolkit().getImage(backgroundURL);
+        imgCreditos = Toolkit.getDefaultToolkit().getImage(creditosURL);
         imgInstrucciones = Toolkit.getDefaultToolkit().getImage(instruccionesURL);
         //Pinta el fondo del Applet con una imagen		
         setBackground(Color.white);
@@ -299,7 +302,9 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
                     g.drawString("Vidas: " + gordo.getVidas(), 25, 60);
                 }
             } else {
-                g.drawString("GAME OVER!!!", getWidth() - 10, getHeight());
+                g.drawImage(imgCreditos, 80, 50, this);
+                g.drawString("GAME OVER!!!", getWidth() - 10, 50);
+                
             }
         } else {
             g.drawString("Cargando...", getWidth() / 2, getHeight() / 2);
