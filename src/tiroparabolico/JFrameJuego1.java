@@ -398,6 +398,7 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
 
             gordo.setPosX(Integer.parseInt(infoGordo[0]));
             gordo.setPosY(Integer.parseInt(infoGordo[1]));
+            gordo.setVidas(Integer.parseInt(infoGordo[2]));
             
             timer = Double.parseDouble(infoGeneral[0]);
 
@@ -417,7 +418,7 @@ public class JFrameJuego1 extends JFrame implements Runnable, KeyListener, Mouse
 
         //guardo posicion posicion burger
         String infoBurger = burger.getPosX() + divisor + burger.getPosY() + divisor + burger.getCont();
-        String infoGordo = gordo.getPosX() + divisor + gordo.getPosY();
+        String infoGordo = gordo.getPosX() + divisor + gordo.getPosY() + divisor + gordo.getVidas();
         String infoGeneral = timer + divisor;
         fileOut.println(infoBurger);
         fileOut.println(infoGordo);
